@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity"
     >
+
 
     <TextView
         android:id="@+id/AppName"
@@ -31,9 +33,10 @@
         android:layout_marginRight="30dp"
         android:background="@drawable/rounded_border"
         android:iconifiedByDefault="false"
-        android:inputType="textPersonName"
+        android:inputType="textAutoCorrect"
         android:queryHint="@string/placeholder_search"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.266"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/AppName">
 
@@ -42,7 +45,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstrantFilter"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="140dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="1dp"
@@ -58,7 +61,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Categorias"
+            android:textColor="#2B418C"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,7 +77,7 @@
             android:layout_marginEnd="8dp"
             android:text="Ver todos >"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.975"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,8 +87,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:scrollbars="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/category" />
 
 
@@ -91,14 +97,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/home_body"
-        android:layout_width="391dp"
-        android:layout_height="411dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/options"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/options"
-        app:layout_constraintTop_toBottomOf="@+id/ConstrantFilter"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConstrantFilter">
 
         <TextView
             android:id="@+id/top_week_header"
@@ -107,19 +111,22 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:text="Mais vistas da semana"
+            android:textColor="#2B418C"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/top_week"
-            android:layout_width="387dp"
-            android:layout_height="364dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_week_header"
-            tools:listitem="@layout/top_week" />
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/publicationview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -174,16 +181,6 @@
             android:src="@mipmap/icon_user"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="38dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/icon_filter" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

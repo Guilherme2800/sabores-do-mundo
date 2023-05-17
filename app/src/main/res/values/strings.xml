@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Sabores do mundo</string>
     <string name="placeholder_search">Pesquisar</string>
+    <string name="title_activity_select_country">SelectCountryActivity</string>
 </resources>
