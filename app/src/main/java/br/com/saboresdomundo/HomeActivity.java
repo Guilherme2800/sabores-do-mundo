@@ -15,6 +15,7 @@ import java.util.List;
 import br.com.saboresdomundo.activity.AdvancedFilterActivity;
 import br.com.saboresdomundo.activity.ListByFilterActivity;
 import br.com.saboresdomundo.activity.NewPublicationActivity;
+import br.com.saboresdomundo.activity.UserOptionsActivity;
 import br.com.saboresdomundo.adapter.CategoryRecycleViewAdapter;
 import br.com.saboresdomundo.adapter.PublicationRecycleViewAdapter;
 import br.com.saboresdomundo.model.Category;
@@ -38,7 +39,7 @@ public class HomeActivity extends AppCompatActivity{
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, NewPublicationActivity.class));
+                startActivity(new Intent(HomeActivity.this, UserOptionsActivity.class));
             }
         });
 
@@ -94,8 +95,6 @@ public class HomeActivity extends AppCompatActivity{
         rv.setAdapter(categoryRecycleViewAdapter);
 
     }
-
-    // Build top week
 
     private void buildTopWeek(){
         RecyclerView rv = findViewById(R.id.top_week);

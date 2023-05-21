@@ -2,6 +2,7 @@ package br.com.saboresdomundo.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Publication implements Serializable {
@@ -11,6 +12,8 @@ public class Publication implements Serializable {
     private BigDecimal price;
     private String time;
     private int img;
+
+    private String imgPath;
     private List<String> ingredients;
     private List<Steps> firstStep;
     private List<Steps> steps;
@@ -62,6 +65,9 @@ public class Publication implements Serializable {
     }
 
     public List<Category> getCategory() {
+        if(category == null){
+            category = new ArrayList<>();
+        }
         return category;
     }
 
@@ -115,5 +121,13 @@ public class Publication implements Serializable {
 
     public void setStars(int stars) {
         this.stars = stars;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 }

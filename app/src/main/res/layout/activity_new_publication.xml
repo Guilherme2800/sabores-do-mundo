@@ -10,12 +10,13 @@
         android:id="@+id/list_filter_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
         android:layout_marginTop="4dp"
         android:text="Nova publicação - Etapa 1"
         android:textColor="#4F669E"
         android:textSize="25sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_filter_back" />
 
@@ -175,9 +176,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Próxima etapa"
+            app:iconTint="#139C2F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredientes" />
+            app:layout_constraintTop_toBottomOf="@+id/ingredientes"
+            app:rippleColor="#1F8C3C"
+            app:strokeColor="#E65757" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

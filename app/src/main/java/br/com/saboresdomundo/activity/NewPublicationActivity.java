@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -32,6 +34,19 @@ public class NewPublicationActivity extends AppCompatActivity {
         buildSeekprice();
         buildSeekMinutes();
         buildReceitaProximaEtapa();
+        buildButtonBack();
+    }
+
+    private void buildButtonBack(){
+
+        ImageView image = findViewById(R.id.list_filter_back);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     private void buildReceitaProximaEtapa(){
@@ -41,12 +56,24 @@ public class NewPublicationActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Publication publication = new Publication();
+                if(ingredientesList.size() == 0){
+                    Toast.makeText(getApplicationContext(), "Insira os ingredientes.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 publication.setIngredients(ingredientesList);
 
                 EditText receitaTitulo = findViewById(R.id.receitaTitulo);
+                if(receitaTitulo.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Insira o titulo.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 publication.setTitle(receitaTitulo.getText().toString());
 
                 EditText receitaDescricao = findViewById(R.id.receitaDescricao);
+                if(receitaDescricao.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Insira a descrição.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 publication.setDescription(receitaDescricao.getText().toString());
 
                 SeekBar receitaTempo = findViewById(R.id.receitaTempo);

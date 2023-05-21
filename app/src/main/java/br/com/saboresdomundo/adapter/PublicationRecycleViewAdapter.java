@@ -1,5 +1,7 @@
 package br.com.saboresdomundo.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,11 @@ public class PublicationRecycleViewAdapter extends RecyclerView.Adapter<Publicat
         holder.publication_title.setText(data.get( holder.getAdapterPosition()).getTitle());
         holder.publication_description.setText(data.get( holder.getAdapterPosition()).getDescription());
         holder.publication_time.setText(data.get( holder.getAdapterPosition()).getTime());
-        holder.publication_img.setImageResource(data.get( holder.getAdapterPosition()).getImg());
+        if(data.get( holder.getAdapterPosition()).getImg() != 0){
+            holder.publication_img.setImageResource(data.get( holder.getAdapterPosition()).getImg());
+        }else{
+            holder.publication_img.setImageBitmap(BitmapFactory.decodeFile(data.get( holder.getAdapterPosition()).getImgPath()));
+        }
 
         holder.main_publication.setOnClickListener(new View.OnClickListener() {
             @Override

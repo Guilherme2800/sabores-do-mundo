@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class NewPublicationStep2Activity extends AppCompatActivity {
         publication = (Publication) getIntent().getSerializableExtra("publication");
         buildSetps();
         buildInserirEtapa();
+        buildProximaEtapa();
     }
 
     private void buildInserirEtapa(){
@@ -53,6 +56,9 @@ public class NewPublicationStep2Activity extends AppCompatActivity {
 
                 stepsList.add(step);
 
+                TextView currentStep = findViewById(R.id.current_step);
+                currentStep.setText("Etapa " + (stepsList.size() + 1));
+
                 etapaDescricao.setText("");
 
                 ListView etapasInseridas = findViewById(R.id.etapasInseridas);
@@ -66,5 +72,30 @@ public class NewPublicationStep2Activity extends AppCompatActivity {
         ListView etapasInseridas = findViewById(R.id.etapasInseridas);
         StepArrayAdapter adapter = new StepArrayAdapter(this, R.layout.step, stepsList);
         etapasInseridas.setAdapter(adapter);
+    }
+
+    private void buildProximaEtapa(){
+        Button button = findViewById(R.id.receitaProximaEtapa2);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setStepsList();
+
+                if(publication.getSteps().size() == 0){
+                    Toast.makeText(getApplicationContext(), "Informe ao menos uma etapa.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent intent = new Intent(NewPublicationStep2Activity.this, NewPublicationStep3Activity.class);
+                intent.putExtra("publication", publication);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void setStepsList(){
+        publication.setSteps(this.stepsList);
     }
 }

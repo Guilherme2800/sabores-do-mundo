@@ -1,12 +1,15 @@
 package br.com.saboresdomundo.model.builder;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.com.saboresdomundo.R;
 import br.com.saboresdomundo.model.Category;
 
 public class CategoryBuilder {
+
+    public static List<Category> news = new LinkedList<>();
 
     public static List<Category> buildDefultCategories(){
 
@@ -26,6 +29,12 @@ public class CategoryBuilder {
         categories.add(new Category(R.mipmap.country_flag_italia, "Itália", R.mipmap.country_background_italia_foreground));
         categories.add(new Category(R.mipmap.country_flag_japao, "Japão", R.mipmap.country_background_japao_foreground));
 
+        return categories;
+    }
+
+    public static List<Category> findAll(){
+        List<Category> categories = CategoryBuilder.buildDefultCategories();
+        categories.addAll(CategoryBuilder.buildCountryCategories());
         return categories;
     }
 

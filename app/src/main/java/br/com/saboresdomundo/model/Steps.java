@@ -1,6 +1,8 @@
 package br.com.saboresdomundo.model;
 
-public class Steps {
+import java.io.Serializable;
+
+public class Steps implements Serializable {
 
     private int step;
     private String description;
