@@ -61,26 +61,38 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Guilherme Henrique"
+        android:text="User name example"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_options_list"
-        android:layout_width="395dp"
+        android:layout_width="382dp"
         android:layout_height="0dp"
         android:layout_marginTop="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/options"
+        app:layout_constraintBottom_toTopOf="@+id/logout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/userName"
         tools:listitem="@layout/user_options" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_height="wrap_content"
+        android:text="Deslogar"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/options"
+        app:layout_constraintEnd_toEndOf="@+id/user_options_list"
+        app:layout_constraintStart_toStartOf="@+id/user_options_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

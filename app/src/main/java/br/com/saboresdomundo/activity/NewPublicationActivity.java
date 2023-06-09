@@ -81,7 +81,7 @@ public class NewPublicationActivity extends AppCompatActivity {
 
                 SeekBar receitaPrice = findViewById(R.id.receitaPrice);
                 Integer price = receitaPrice.getProgress();
-                publication.setPrice(BigDecimal.valueOf(Long.parseLong(price.toString())));
+                publication.setPrice(Long.parseLong(price.toString()));
 
                 Intent intent = new Intent(NewPublicationActivity.this, NewPublicationStep2Activity.class);
                 intent.putExtra("publication", publication);

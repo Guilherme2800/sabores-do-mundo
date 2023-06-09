@@ -1,7 +1,9 @@
 package br.com.saboresdomundo.model;
 
-import java.io.Serializable;
+import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+@IgnoreExtraProperties
 public class Steps implements Serializable {
 
     private int step;

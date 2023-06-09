@@ -27,6 +27,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
@@ -128,6 +130,13 @@ public class NewPublicationStep4Activity extends FragmentActivity implements OnM
 
     public void savePublication(){
         PublicationViewBuilder.news.add(publication);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("publications");
+
+        String publicationId = myRef.push().getKey();
+
+        myRef.child(publicationId).setValue(publication);
     }
 
     private void buildInserirCategorias(){

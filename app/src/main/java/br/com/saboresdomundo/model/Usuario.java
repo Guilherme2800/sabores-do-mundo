@@ -1,15 +1,16 @@
 package br.com.saboresdomundo.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Date;
 import java.util.List;
-
+@IgnoreExtraProperties
 public class Usuario {
 
     private String login;
     private String password;
 
     private String name;
-    private Date birth;
 
     private List<Publication> favoritePublications;
     private List<Publication> finishPublications;
@@ -37,14 +38,6 @@ public class Usuario {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
     }
 
     public List<Publication> getFavoritePublications() {

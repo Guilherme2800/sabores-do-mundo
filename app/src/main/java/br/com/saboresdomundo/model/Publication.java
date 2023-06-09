@@ -1,15 +1,17 @@
 package br.com.saboresdomundo.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
+@IgnoreExtraProperties
 public class Publication implements Serializable {
 
     private String title;
     private String description;
-    private BigDecimal price;
+    private Long price;
     private String time;
     private int img;
 
@@ -83,11 +85,11 @@ public class Publication implements Serializable {
         this.ingredients = ingredients;
     }
 
-    public BigDecimal getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

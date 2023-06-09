@@ -10,6 +10,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.saboresdomundo.activity.AdvancedFilterActivity;
@@ -18,12 +27,18 @@ import br.com.saboresdomundo.activity.NewPublicationActivity;
 import br.com.saboresdomundo.activity.UserOptionsActivity;
 import br.com.saboresdomundo.adapter.CategoryRecycleViewAdapter;
 import br.com.saboresdomundo.adapter.PublicationRecycleViewAdapter;
+import br.com.saboresdomundo.config.FirebaseAuthListener;
 import br.com.saboresdomundo.model.Category;
 import br.com.saboresdomundo.model.Publication;
+import br.com.saboresdomundo.model.Usuario;
 import br.com.saboresdomundo.model.builder.CategoryBuilder;
 import br.com.saboresdomundo.model.builder.PublicationViewBuilder;
 
 public class HomeActivity extends AppCompatActivity{
+
+    FirebaseAuth fbAuth;
+
+    FirebaseAuthListener authListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +46,6 @@ public class HomeActivity extends AppCompatActivity{
         setContentView(R.layout.activity_home);
 
         buildCategories();
-        buildTopWeek();
         buildSearchFilter();
         buildOptionAdvancedFilter();
 
@@ -43,6 +57,41 @@ public class HomeActivity extends AppCompatActivity{
             }
         });
 
+        this.fbAuth = FirebaseAuth.getInstance();
+        this.authListener = new FirebaseAuthListener(this);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("publications");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Publication> publications = new ArrayList<>();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Publication publication = snapshot.getValue(Publication.class);
+                    publications.add(publication);
+                }
+
+                buildTopWeek(publications);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Trate o erro, se necessário
+            }
+        });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        fbAuth.addAuthStateListener(authListener);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        fbAuth.removeAuthStateListener(authListener);
     }
 
     private void buildSearchFilter(){
@@ -96,10 +145,8 @@ public class HomeActivity extends AppCompatActivity{
 
     }
 
-    private void buildTopWeek(){
+    private void buildTopWeek(List<Publication> publications){
         RecyclerView rv = findViewById(R.id.top_week);
-
-        List<Publication> publications = PublicationViewBuilder.buildDefultPublications();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         PublicationRecycleViewAdapter publicationRecycleViewAdapter = new PublicationRecycleViewAdapter(publications, this);
