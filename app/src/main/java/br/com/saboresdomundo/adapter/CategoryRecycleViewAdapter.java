@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -21,9 +22,9 @@ import br.com.saboresdomundo.model.Category;
 public class CategoryRecycleViewAdapter extends RecyclerView.Adapter<CategoryRecycleViewAdapter.MyHolder> {
     List<Category> data;
 
-    AppCompatActivity currentActivity;
+    FragmentActivity currentActivity;
 
-    public CategoryRecycleViewAdapter(List<Category> data, AppCompatActivity currentActivity) {
+    public CategoryRecycleViewAdapter(List<Category> data, FragmentActivity currentActivity) {
         this.data = data;
         this.currentActivity = currentActivity;
     }
@@ -69,7 +70,7 @@ public class CategoryRecycleViewAdapter extends RecyclerView.Adapter<CategoryRec
         }
     }
 
-    public void onItemClick(Category category, AppCompatActivity currentActivity){
+    public void onItemClick(Category category, FragmentActivity currentActivity){
 
         Intent intent = new Intent(currentActivity, FilterByCategory.class);
         intent.putExtra("category", category);

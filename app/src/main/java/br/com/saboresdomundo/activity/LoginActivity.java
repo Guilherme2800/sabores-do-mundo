@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                     String msg = task.isSuccessful() ? "SIGN IN OK!": "SIGN IN ERROR!";
                     Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
                     if(task.isSuccessful()){
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }
                 });
     }

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -22,9 +23,9 @@ import br.com.saboresdomundo.model.Publication;
 public class PublicationRecycleViewAdapter extends RecyclerView.Adapter<PublicationRecycleViewAdapter.MyPublicationHolder> {
     List<Publication> data;
 
-    AppCompatActivity currentActivity;
+    FragmentActivity currentActivity;
 
-    public PublicationRecycleViewAdapter(List<Publication> data, AppCompatActivity currentActivity) {
+    public PublicationRecycleViewAdapter(List<Publication> data, FragmentActivity currentActivity) {
         this.data = data;
         this.currentActivity = currentActivity;
     }

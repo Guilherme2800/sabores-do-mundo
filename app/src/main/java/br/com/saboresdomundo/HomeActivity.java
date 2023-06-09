@@ -1,15 +1,21 @@
 package br.com.saboresdomundo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,31 +40,25 @@ import br.com.saboresdomundo.model.Usuario;
 import br.com.saboresdomundo.model.builder.CategoryBuilder;
 import br.com.saboresdomundo.model.builder.PublicationViewBuilder;
 
-public class HomeActivity extends AppCompatActivity{
+public class HomeActivity extends Fragment {
 
     FirebaseAuth fbAuth;
 
     FirebaseAuthListener authListener;
 
+    View rootView;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        rootView = inflater.inflate(R.layout.activity_home, container, false);
 
         buildCategories();
         buildSearchFilter();
         buildOptionAdvancedFilter();
 
-        ImageView imageView = findViewById(R.id.option_profile);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, UserOptionsActivity.class));
-            }
-        });
-
         this.fbAuth = FirebaseAuth.getInstance();
-        this.authListener = new FirebaseAuthListener(this);
+        this.authListener = new FirebaseAuthListener(getActivity());
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("publications");
@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity{
             }
         });
 
+        return rootView;
     }
 
     @Override
@@ -96,7 +97,7 @@ public class HomeActivity extends AppCompatActivity{
 
     private void buildSearchFilter(){
 
-        SearchView searchView = (SearchView) findViewById(R.id.search_filter);
+        SearchView searchView = (SearchView) rootView.findViewById(R.id.search_filter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -113,19 +114,19 @@ public class HomeActivity extends AppCompatActivity{
     }
 
     private void openListByFilter(String query){
-        Intent intent = new Intent(this, ListByFilterActivity.class);
+        Intent intent = new Intent(getActivity(), ListByFilterActivity.class);
         intent.putExtra("filter", query);
         startActivity(intent);
     }
 
     private void buildOptionAdvancedFilter(){
-        View viewAllCategories = findViewById(R.id.view_all_catagories);
+        View viewAllCategories = rootView.findViewById(R.id.view_all_catagories);
 
         viewAllCategories.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, AdvancedFilterActivity.class));
+                startActivity(new Intent(getActivity(), AdvancedFilterActivity.class));
             }
 
         });
@@ -134,22 +135,22 @@ public class HomeActivity extends AppCompatActivity{
     // Build Categories
 
     private void buildCategories(){
-        RecyclerView rv = findViewById(R.id.horizontalRv);
+        RecyclerView rv = rootView.findViewById(R.id.horizontalRv);
 
         List<Category> categories = CategoryBuilder.buildDefultCategories();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        CategoryRecycleViewAdapter categoryRecycleViewAdapter = new CategoryRecycleViewAdapter(categories, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        CategoryRecycleViewAdapter categoryRecycleViewAdapter = new CategoryRecycleViewAdapter(categories, getActivity());
         rv.setLayoutManager(linearLayoutManager);
         rv.setAdapter(categoryRecycleViewAdapter);
 
     }
 
     private void buildTopWeek(List<Publication> publications){
-        RecyclerView rv = findViewById(R.id.top_week);
+        RecyclerView rv = rootView.findViewById(R.id.top_week);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        PublicationRecycleViewAdapter publicationRecycleViewAdapter = new PublicationRecycleViewAdapter(publications, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        PublicationRecycleViewAdapter publicationRecycleViewAdapter = new PublicationRecycleViewAdapter(publications, getActivity());
         rv.setLayoutManager(linearLayoutManager);
         rv.setAdapter(publicationRecycleViewAdapter);
 

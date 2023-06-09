@@ -3,13 +3,16 @@ package br.com.saboresdomundo.activity;
 import static br.com.saboresdomundo.R.id.user_options_list;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,7 +41,7 @@ import br.com.saboresdomundo.model.Usuario;
 import br.com.saboresdomundo.model.builder.PublicationViewBuilder;
 import br.com.saboresdomundo.model.builder.UserOptionsBuilder;
 
-public class UserOptionsActivity extends AppCompatActivity {
+public class UserOptionsActivity extends Fragment {
 
     FirebaseAuth fbAuth;
 
@@ -48,15 +51,17 @@ public class UserOptionsActivity extends AppCompatActivity {
 
     Usuario user;
 
+    View rootView;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_options);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Infla o layout do fragmento
+        rootView = inflater.inflate(R.layout.activity_user_options, container, false);
 
         buildUserOptions();
         buildHome();
 
-        Button buttonLogout = findViewById(R.id.logout);
+        Button buttonLogout = rootView.findViewById(R.id.logout);
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +70,7 @@ public class UserOptionsActivity extends AppCompatActivity {
         });
 
         this.fbAuth = FirebaseAuth.getInstance();
-        this.authListener = new FirebaseAuthListener(this);
+        this.authListener = new FirebaseAuthListener(getActivity());
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser fbUser = fbAuth.getCurrentUser();
@@ -77,13 +82,15 @@ public class UserOptionsActivity extends AppCompatActivity {
                 Usuario tempUser = dataSnapshot.getValue(Usuario.class);
                 if (tempUser != null) {
                     UserOptionsActivity.this.user = tempUser;
-                    TextView username = findViewById(R.id.userName);
+                    TextView username = rootView.findViewById(R.id.userName);
                     username.setText("Olá " + tempUser.getName() + "!");
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
+
+        return rootView;
     }
 
     @Override
@@ -102,25 +109,25 @@ public class UserOptionsActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             mAuth.signOut();
-            startActivity(new Intent(UserOptionsActivity.this, LoginActivity.class));
+            startActivity(new Intent(getActivity(), LoginActivity.class));
         } else {
-            Toast.makeText(UserOptionsActivity.this, "Erro!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Erro!", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void buildHome(){
-        ImageView imageView =findViewById(R.id.option_home_user_options);
+        ImageView imageView = rootView.findViewById(R.id.option_home_user_options);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(UserOptionsActivity.this, HomeActivity.class));
+                startActivity(new Intent(getActivity(), HomeActivity.class));
             }
         });
     }
 
     private void buildUserOptions(){
 
-        RecyclerView rv = findViewById(R.id.user_options_list);
+        RecyclerView rv = rootView.findViewById(R.id.user_options_list);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),LinearLayoutManager.VERTICAL);
         dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider));
@@ -128,8 +135,8 @@ public class UserOptionsActivity extends AppCompatActivity {
 
         List<UserOptions> options = UserOptionsBuilder.getOptions();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        UserOptionsRecycleViewAdapter publicationRecycleViewAdapter = new UserOptionsRecycleViewAdapter(options, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        UserOptionsRecycleViewAdapter publicationRecycleViewAdapter = new UserOptionsRecycleViewAdapter(options, getActivity());
         rv.setLayoutManager(linearLayoutManager);
         rv.setAdapter(publicationRecycleViewAdapter);
 

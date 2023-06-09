@@ -99,7 +99,6 @@
         android:id="@+id/home_body"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ConstrantFilter">
@@ -120,66 +119,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/top_week"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_week_header"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/publicationview" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/options"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#FFFFFF"
-        android:elevation="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/option_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/icon_home" />
-
-        <ImageView
-            android:id="@+id/option_list_finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/option_home"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/icon_list" />
-
-        <ImageView
-            android:id="@+id/option_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/option_list_finish"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="32dp"
-            android:src="@mipmap/icon_heart"
-            />
-
-        <ImageView
-            android:id="@+id/option_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/option_favorite"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="32dp"
-            android:src="@mipmap/icon_user"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

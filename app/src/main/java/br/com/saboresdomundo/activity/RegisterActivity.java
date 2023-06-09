@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                         DatabaseReference drUsers = FirebaseDatabase.getInstance().getReference("users");
                         drUsers.child(mAuth.getCurrentUser().getUid()).setValue(tempUser);
 
-                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                     }
                 });
     }

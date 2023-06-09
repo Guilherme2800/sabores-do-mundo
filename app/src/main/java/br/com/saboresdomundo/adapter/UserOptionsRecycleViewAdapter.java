@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -25,9 +26,9 @@ public class UserOptionsRecycleViewAdapter extends RecyclerView.Adapter<UserOpti
 
     List<UserOptions> data;
 
-    AppCompatActivity currentActivity;
+    FragmentActivity currentActivity;
 
-    public UserOptionsRecycleViewAdapter(List<UserOptions> data, AppCompatActivity currentActivity) {
+    public UserOptionsRecycleViewAdapter(List<UserOptions> data, FragmentActivity currentActivity) {
         this.data = data;
         this.currentActivity = currentActivity;
     }
@@ -77,7 +78,7 @@ public class UserOptionsRecycleViewAdapter extends RecyclerView.Adapter<UserOpti
         }
     }
 
-    public void onItemClick(UserOptions option, AppCompatActivity currentActivity){
+    public void onItemClick(UserOptions option, FragmentActivity currentActivity){
         Intent intent = new Intent(currentActivity, option.getClazz());
         currentActivity.startActivity(intent);
     }
