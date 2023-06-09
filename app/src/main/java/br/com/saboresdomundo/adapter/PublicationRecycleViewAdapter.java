@@ -15,6 +15,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import br.com.saboresdomundo.R;
@@ -42,6 +44,7 @@ public class PublicationRecycleViewAdapter extends RecyclerView.Adapter<Publicat
         holder.publication_title.setText(data.get( holder.getAdapterPosition()).getTitle());
         holder.publication_description.setText(data.get( holder.getAdapterPosition()).getDescription());
         holder.publication_time.setText(data.get( holder.getAdapterPosition()).getTime());
+        holder.authorName.setText( "Autor: " + data.get(holder.getAdapterPosition()).getAutor());
         if(data.get( holder.getAdapterPosition()).getImg() != 0){
             holder.publication_img.setImageResource(data.get( holder.getAdapterPosition()).getImg());
         }else{
@@ -66,6 +69,8 @@ public class PublicationRecycleViewAdapter extends RecyclerView.Adapter<Publicat
         TextView publication_title;
         TextView publication_description;
         TextView publication_time;
+
+        TextView authorName;
         ImageView publication_img;
 
         CardView main_publication;
@@ -77,6 +82,7 @@ public class PublicationRecycleViewAdapter extends RecyclerView.Adapter<Publicat
             publication_time = itemView.findViewById(R.id.food_time_top_week);
             publication_img = itemView.findViewById(R.id.food_image_top_week);
             main_publication = itemView.findViewById(R.id.main_publications);
+            authorName = itemView.findViewById(R.id.authorName);
         }
     }
 

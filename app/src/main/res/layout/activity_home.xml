@@ -8,37 +8,49 @@
     tools:context=".HomeActivity"
     >
 
-
     <TextView
-        android:id="@+id/AppName"
+        android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:hint="@string/placeholder_search"
-        android:text="Sabores do mundo"
-        android:textColor="#2B418C"
+        android:fontFamily="sans-serif-light"
+        android:text="Olá"
         android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/search_filter"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/userNameHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-light"
+        android:text=""
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.widget.SearchView
         android:id="@+id/search_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/rounded_border"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edit_text_gb"
+        android:elevation="20sp"
         android:iconifiedByDefault="false"
         android:inputType="textAutoCorrect"
         android:queryHint="@string/placeholder_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.266"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AppName">
+        app:layout_constraintTop_toBottomOf="@+id/userNameHome">
 
     </android.widget.SearchView>
 
@@ -61,7 +73,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Categorias"
-            android:textColor="#2B418C"
+            android:textColor="#7d34eb"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,6 +100,7 @@
             android:layout_marginTop="32dp"
             android:scrollbars="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/category" />
@@ -101,32 +114,34 @@
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstrantFilter">
-
-        <TextView
-            android:id="@+id/top_week_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:text="Mais vistas da semana"
-            android:textColor="#2B418C"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/top_week_header">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/top_week"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@+id/top_week_header"
-            app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/publicationview" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/publicationview"
+            tools:ignore="NotSibling" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/top_week_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Receitas da semana"
+        android:textColor="#7d34eb"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConstrantFilter" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

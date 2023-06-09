@@ -1,62 +1,71 @@
 package br.com.saboresdomundo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
-import br.com.saboresdomundo.HomeActivity;
 import br.com.saboresdomundo.R;
+import br.com.saboresdomundo.adapter.LoginAdapter;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText edEmail;
+    TabLayout tabLayout;
 
-    EditText edPassword;
+    ViewPager viewPager;
+
+    FloatingActionButton fb, google;
+
+    float v = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        edEmail = findViewById(R.id.loginEmail);
-        edPassword = findViewById(R.id.loginPassword);
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager = findViewById(R.id.view_pager);
+        fb = findViewById(R.id.fab_facebook);
+        google = findViewById(R.id.fab_google);
 
-        TextView goRegister = findViewById(R.id.buttonGoRegister);
-        goRegister.setOnClickListener(new View.OnClickListener() {
+        tabLayout.addTab(tabLayout.newTab().setText("Login"));
+        tabLayout.addTab(tabLayout.newTab().setText("Registrar"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
-        Button button = findViewById(R.id.buttonLogin);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonSignInClick(view);
-            }
-        });
-    }
+        final LoginAdapter adapter = new LoginAdapter(getSupportFragmentManager(), this, tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-    public void buttonSignInClick(View view) {
-        String login = edEmail.getText().toString();
-        String passwd = edPassword.getText().toString();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(login, passwd)
-                .addOnCompleteListener(this, task -> {
-                    String msg = task.isSuccessful() ? "SIGN IN OK!": "SIGN IN ERROR!";
-                    Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    if(task.isSuccessful()){
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    }
-                });
+        fb.setTranslationY(300);
+        google.setTranslationY(300);
+        tabLayout.setTranslationY(300);
+
+        fb.setAlpha(v);
+        google.setAlpha(v);
+        tabLayout.setAlpha(v);
+
+        fb.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        google.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        tabLayout.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(100).start();
     }
 }

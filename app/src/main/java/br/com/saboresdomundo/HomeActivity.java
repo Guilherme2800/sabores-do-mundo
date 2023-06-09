@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +49,10 @@ public class HomeActivity extends Fragment {
 
     View rootView;
 
+    Usuario user;
+    DatabaseReference drUser;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -79,6 +84,23 @@ public class HomeActivity extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
                 // Trate o erro, se necessário
             }
+        });
+
+        FirebaseUser fbUser = fbAuth.getCurrentUser();
+        drUser = database.getReference("users/" + fbUser.getUid());
+
+        drUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuario tempUser = dataSnapshot.getValue(Usuario.class);
+                if (tempUser != null) {
+                    HomeActivity.this.user = tempUser;
+                    TextView username = rootView.findViewById(R.id.userNameHome);
+                    username.setText(tempUser.getName() + "!");
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
         });
 
         return rootView;

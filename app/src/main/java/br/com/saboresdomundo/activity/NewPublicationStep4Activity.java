@@ -27,8 +27,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -41,9 +46,11 @@ import java.util.Optional;
 import br.com.saboresdomundo.HomeActivity;
 import br.com.saboresdomundo.R;
 import br.com.saboresdomundo.SelectCountryActivity;
+import br.com.saboresdomundo.config.FirebaseAuthListener;
 import br.com.saboresdomundo.databinding.ActivitySelectCountryBinding;
 import br.com.saboresdomundo.model.Category;
 import br.com.saboresdomundo.model.Publication;
+import br.com.saboresdomundo.model.Usuario;
 import br.com.saboresdomundo.model.builder.CategoryBuilder;
 import br.com.saboresdomundo.model.builder.PublicationViewBuilder;
 
@@ -63,6 +70,16 @@ public class NewPublicationStep4Activity extends FragmentActivity implements OnM
     double latitude;
     double longitude;
 
+    FirebaseAuth fbAuth;
+
+    FirebaseAuthListener authListener;
+
+    DatabaseReference drUser;
+
+    Usuario user;
+
+    View rootView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +90,23 @@ public class NewPublicationStep4Activity extends FragmentActivity implements OnM
         requestPermission();
         buildInserirCategorias();
         buildFinalizar();
+
+        this.fbAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseUser fbUser = fbAuth.getCurrentUser();
+        drUser = database.getReference("users/" + fbUser.getUid());
+
+        drUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuario tempUser = dataSnapshot.getValue(Usuario.class);
+                if (tempUser != null) {
+                    NewPublicationStep4Activity.this.user = tempUser;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_new_category);
         mapFragment.getMapAsync(this);
@@ -90,7 +124,7 @@ public class NewPublicationStep4Activity extends FragmentActivity implements OnM
 
                 Toast.makeText(getApplicationContext(), "Receita salva com sucesso...", Toast.LENGTH_SHORT).show();
 
-                startActivity(new Intent(NewPublicationStep4Activity.this, HomeActivity.class));
+                startActivity(new Intent(NewPublicationStep4Activity.this, MainActivity.class));
             }
         });
     }
@@ -129,6 +163,7 @@ public class NewPublicationStep4Activity extends FragmentActivity implements OnM
     }
 
     public void savePublication(){
+        publication.setAutor(user.getName());
         PublicationViewBuilder.news.add(publication);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();

@@ -20,7 +20,7 @@ public class Publication implements Serializable {
     private List<Steps> firstStep;
     private List<Steps> steps;
     private List<Category> category;
-    private Usuario autor;
+    private String autor;
     private int stars;
 
     public Publication() {
@@ -93,11 +93,11 @@ public class Publication implements Serializable {
         this.price = price;
     }
 
-    public Usuario getAutor() {
+    public String getAutor() {
         return autor;
     }
 
-    public void setAutor(Usuario autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
     }
 
